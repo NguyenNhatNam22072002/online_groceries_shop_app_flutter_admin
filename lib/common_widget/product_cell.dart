@@ -7,7 +7,6 @@ import '../model/offer_product_model.dart';
 class ProductCell extends StatelessWidget {
   final OfferProductModel pObj;
   final VoidCallback onPressed;
-  final VoidCallback onCart;
   final double margin;
   final double weight;
 
@@ -17,7 +16,7 @@ class ProductCell extends StatelessWidget {
       required this.onPressed,
       this.weight = 180,
       this.margin = 8,
-      required this.onCart});
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -79,23 +78,6 @@ class ProductCell extends StatelessWidget {
                       color: TColor.primaryText,
                       fontSize: 18,
                       fontWeight: FontWeight.w600),
-                ),
-                InkWell(
-                  onTap: onCart,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: TColor.primary,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      "assets/img/add.png",
-                      width: 15,
-                      height: 15,
-                    ),
-                  ),
                 ),
               ],
             )

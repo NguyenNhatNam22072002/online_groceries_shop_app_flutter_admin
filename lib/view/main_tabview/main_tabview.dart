@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/home/home_view.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/notification/notification_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/order_management/orders_management.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/product/product_view.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/setting/setting_view.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/user/user_list_view.dart';
 
 import '../../common/color_extension.dart';
 
@@ -23,7 +27,7 @@ class _MainTabViewState extends State<MainTabView>
   @override
   void initState() {
     super.initState();
-    
+
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     controller = TabController(length: 5, vsync: this);
     controller?.addListener(() {
@@ -47,10 +51,10 @@ class _MainTabViewState extends State<MainTabView>
     return Scaffold(
       body: TabBarView(controller: controller, children: [
          const HomeView(),
-         const HomeView(),
+         AddProductScreen(),
          OrderListView(),
-         const HomeView(),
-         const HomeView(),
+         UserListView(),
+         NotificationListView(),
       ]),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -116,13 +120,12 @@ class _MainTabViewState extends State<MainTabView>
                   ),
                 ),
                 Tab(
-                  text: "Setting",
-                  icon: Icon(Icons.settings,
+                  text: "Notifications",
+                  icon: Icon(Icons.notification_add,
                     size: 25,
                     color: selectTab == 4 ? TColor.primary : TColor.primaryText,
                   ),
                 ),
-
               ]),
         ),
       ),

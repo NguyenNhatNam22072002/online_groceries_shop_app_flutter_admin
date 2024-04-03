@@ -115,7 +115,7 @@ class Globs {
 }
 
 class SVKey {
-  static const mainUrl = "http://172.16.31.67:3001";
+  static const mainUrl = "http://172.16.20.248:3001";
 
   // Hàm để lấy IPv4 Address từ thiết bị
   static const baseUrl = '$mainUrl/api/app/';
@@ -182,6 +182,9 @@ class SVKey {
   static const svGetSalesData = '${adminUrl}sales_last_5_months';
   static const svGetNewOrders = '${adminUrl}new_orders_list';
   static const svGetCompletedOrders = '${adminUrl}completed_orders_list';
+  static const svGetUserList = '${adminUrl}user_list';
+  static const svGetNotificationReviewList = '${adminUrl}notification_list';
+  static const svTop10Product = '${adminUrl}home_best_selling';
 
 }
 

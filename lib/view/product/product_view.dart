@@ -21,7 +21,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   final prodVM = Get.put(ProductManagementViewModel());
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,37 +90,36 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ),
             SectionView(
               title: "Best Selling",
-              padding:
-              const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               onPressed: () {},
             ),
             SizedBox(
               height: 230,
               child: Obx(
-                    () =>
-                    ListView.builder(
-                        controller: _bestSellingListScrollController,
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        itemCount: prodVM.bestSellingArr.length,
-                        itemBuilder: (context, index) {
-                          var pObj = prodVM.bestSellingArr[index];
+                () => ListView.builder(
+                    controller: _bestSellingListScrollController,
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    itemCount: prodVM.bestSellingArr.length,
+                    itemBuilder: (context, index) {
+                      var pObj = prodVM.bestSellingArr[index];
 
-                          return ProductCell(
-                            pObj: pObj,
-                            onPressed: () async {
-                              // await Get.to(() =>
-                              //     ProductDetails(
-                              //       pObj: pObj,
-                              //     ));
-                              //
-                              // homeVM.serviceCallHomeExlusiveOffer();
-                              // homeVM.serviceCallHomeBestSelling();
-                              // homeVM.serviceCallHomeGroceries();
-                              // homeVM.serviceCallHomeAllProducts();
-                            },
-                          );
-                        }),),
+                      return ProductCell(
+                        pObj: pObj,
+                        onPressed: () async {
+                          // await Get.to(() =>
+                          //     ProductDetails(
+                          //       pObj: pObj,
+                          //     ));
+                          //
+                          // homeVM.serviceCallHomeExlusiveOffer();
+                          // homeVM.serviceCallHomeBestSelling();
+                          // homeVM.serviceCallHomeGroceries();
+                          // homeVM.serviceCallHomeAllProducts();
+                        },
+                      );
+                    }),
+              ),
             ),
           ],
         ),

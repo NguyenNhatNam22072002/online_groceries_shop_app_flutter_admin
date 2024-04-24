@@ -57,12 +57,14 @@ class _UserListViewState extends State<UserListView> {
 
               return Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey), // Border cho từng phần tử
+                  border:
+                      Border.all(color: Colors.grey), // Border cho từng phần tử
                   borderRadius: BorderRadius.circular(10), // Bo góc
                 ),
                 margin: EdgeInsets.all(5), // Khoảng cách giữa các phần tử
                 child: ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   leading: CircleAvatar(
                     radius: 40, // Phóng to avatar
                     child: Image.asset(
@@ -73,8 +75,11 @@ class _UserListViewState extends State<UserListView> {
                   ),
                   title: Row(
                     children: [
-                      Text(user.username.toString() ?? 'Unknown User', style: TextStyle(fontSize: 18)), // Tăng kích thước chữ
-                      SizedBox(width: 10), // Khoảng cách giữa tên và biểu tượng sao
+                      Text(user.username.toString() ?? 'Unknown User',
+                          style:
+                              TextStyle(fontSize: 18)), // Tăng kích thước chữ
+                      SizedBox(
+                          width: 10), // Khoảng cách giữa tên và biểu tượng sao
                     ],
                   ),
                   subtitle: Column(
@@ -88,7 +93,8 @@ class _UserListViewState extends State<UserListView> {
                     ],
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red), // Icon thùng rác màu đỏ
+                    icon: Icon(Icons.delete,
+                        color: Colors.red), // Icon thùng rác màu đỏ
                     onPressed: () {
                       // Xử lý khi người dùng nhấn vào button thùng rác
                       // Ví dụ: Gọi hàm xóa người dùng tại đây

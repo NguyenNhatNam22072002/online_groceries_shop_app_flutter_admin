@@ -17,12 +17,12 @@ void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
-  runApp( const MyApp()
-    // ChangeNotifierProvider( // Bọc ChangeNotifierProvider ở đây
-    //   create: (context) => ReviewStateProvider(),
-    //   child: const MyApp(),
-    // ),
-  );
+  runApp(const MyApp()
+      // ChangeNotifierProvider( // Bọc ChangeNotifierProvider ở đây
+      //   create: (context) => ReviewStateProvider(),
+      //   child: const MyApp(),
+      // ),
+      );
 }
 
 void configLoading() {

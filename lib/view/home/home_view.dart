@@ -13,7 +13,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Home View',
       theme: ThemeData(
@@ -130,8 +129,6 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-
-
 class SalesTable extends StatelessWidget {
   final List<SalesManagementModel> salesData;
 
@@ -170,7 +167,8 @@ class BarChartPainter extends CustomPainter {
     final double barWidth = size.width / (data.length * 2 + 1);
     double maxRevenue = 0;
     for (var i = 0; i < data.length; i++) {
-      final double revenue = data[i].totalRevenue ?? 0; // Sử dụng ?? để xử lý trường hợp null
+      final double revenue =
+          data[i].totalRevenue ?? 0; // Sử dụng ?? để xử lý trường hợp null
       maxRevenue = max(maxRevenue, revenue);
     }
     final double barHeightUnit = size.height / maxRevenue;
@@ -184,7 +182,8 @@ class BarChartPainter extends CustomPainter {
     final double arrowXStart = 0;
     final double arrowXEnd = size.width;
     final double arrowY = size.height;
-    canvas.drawLine(Offset(arrowXStart, arrowY), Offset(arrowXEnd, arrowY), paint);
+    canvas.drawLine(
+        Offset(arrowXStart, arrowY), Offset(arrowXEnd, arrowY), paint);
     canvas.drawLine(
       Offset(arrowXEnd - arrowHeadWidth, arrowY - arrowHeadHeight),
       Offset(arrowXEnd, arrowY),
@@ -201,7 +200,8 @@ class BarChartPainter extends CustomPainter {
     final double arrowYStart = 0;
     final double arrowYEnd = size.height;
     final double arrowX = 2; // Đặt mũi tên dọc ở bên trái
-    canvas.drawLine(Offset(arrowX, arrowYStart), Offset(arrowX, arrowYEnd), paint);
+    canvas.drawLine(
+        Offset(arrowX, arrowYStart), Offset(arrowX, arrowYEnd), paint);
     canvas.drawLine(
       Offset(arrowX + arrowHeadHeight, arrowHeadMargin),
       Offset(arrowX, 0),
@@ -223,8 +223,10 @@ class BarChartPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
     revenuePainter.layout();
-    final double revenueX = arrowX + arrowHeadHeight + 5; // Đặt vị trí x cho văn bản "Revenue"
-    final double revenueY = 0; // Đặt vị trí y cho văn bản "Revenue" ở cao nhất của mũi tên dọc
+    final double revenueX =
+        arrowX + arrowHeadHeight + 5; // Đặt vị trí x cho văn bản "Revenue"
+    final double revenueY =
+        0; // Đặt vị trí y cho văn bản "Revenue" ở cao nhất của mũi tên dọc
     revenuePainter.paint(canvas, Offset(revenueX, revenueY));
 
     // Ghi chữ "Time" ở cuối mũi tên ngang
@@ -237,13 +239,17 @@ class BarChartPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
     timePainter.layout();
-    final double timeX = arrowXEnd - timePainter.width; // Đặt vị trí x cho văn bản "Time" ở cuối mũi tên ngang
-    final double timeY = size.height + 5; // Đặt vị trí y cho văn bản "Time" dưới chân cột
+    final double timeX = arrowXEnd -
+        timePainter
+            .width; // Đặt vị trí x cho văn bản "Time" ở cuối mũi tên ngang
+    final double timeY =
+        size.height + 5; // Đặt vị trí y cho văn bản "Time" dưới chân cột
     timePainter.paint(canvas, Offset(timeX, timeY));
 
     // Vẽ các cột dữ liệu và ghi giá trị "Revenue"
     for (int i = 0; i < data.length; i++) {
-      final double revenue = data[i].totalRevenue ?? 0; // Sử dụng ?? để xử lý trường hợp null
+      final double revenue =
+          data[i].totalRevenue ?? 0; // Sử dụng ?? để xử lý trường hợp null
 
       final double x = (i * 2 + 1) * barWidth;
       final double y = size.height - revenue * barHeightUnit;
@@ -255,7 +261,8 @@ class BarChartPainter extends CustomPainter {
 
       // Ghi giá trị "Revenue" ở đầu mỗi cột
       TextSpan revenueValueSpan = TextSpan(
-        text: '${data[i].totalRevenue}', // Sử dụng giá trị revenue của SalesManagementModel
+        text:
+            '${data[i].totalRevenue}', // Sử dụng giá trị revenue của SalesManagementModel
         style: TextStyle(color: Colors.black, fontSize: 10),
       );
       TextPainter revenueValuePainter = TextPainter(
@@ -263,13 +270,18 @@ class BarChartPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       );
       revenueValuePainter.layout();
-      final double revenueValueX = x + barWidth / 2 - revenueValuePainter.width / 2; // Đặt vị trí x cho văn bản giá trị revenue
-      final double revenueValueY = y - 15; // Đặt vị trí y cho văn bản giá trị revenue ở trên đỉnh cột
+      final double revenueValueX = x +
+          barWidth / 2 -
+          revenueValuePainter.width /
+              2; // Đặt vị trí x cho văn bản giá trị revenue
+      final double revenueValueY =
+          y - 15; // Đặt vị trí y cho văn bản giá trị revenue ở trên đỉnh cột
       revenueValuePainter.paint(canvas, Offset(revenueValueX, revenueValueY));
 
       // Ghi giá trị thời gian ở dưới chân mỗi cột
       TextSpan timeSpan = TextSpan(
-        text: data[i].monthYear, // Giả sử thời gian là thuộc tính "monthYear" của đối tượng SalesManagementModel
+        text: data[i]
+            .monthYear, // Giả sử thời gian là thuộc tính "monthYear" của đối tượng SalesManagementModel
         style: TextStyle(color: Colors.black, fontSize: 10),
       );
       TextPainter timePainter = TextPainter(
@@ -277,8 +289,11 @@ class BarChartPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       );
       timePainter.layout();
-      final double timeX = x + barWidth / 2 - timePainter.width / 2; // Đặt vị trí x cho văn bản thời gian
-      final double timeY = size.height + 5; // Đặt vị trí y cho văn bản thời gian dưới chân cột
+      final double timeX = x +
+          barWidth / 2 -
+          timePainter.width / 2; // Đặt vị trí x cho văn bản thời gian
+      final double timeY =
+          size.height + 5; // Đặt vị trí y cho văn bản thời gian dưới chân cột
       timePainter.paint(canvas, Offset(timeX, timeY));
     }
   }

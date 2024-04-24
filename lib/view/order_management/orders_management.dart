@@ -39,7 +39,8 @@ class _OrderListViewState extends State<OrderListView> {
             ),
           ),
           bottom: TabBar(
-            labelColor: Colors.black, // Đổi màu của văn bản trên các tab thành màu đen
+            labelColor:
+                Colors.black, // Đổi màu của văn bản trên các tab thành màu đen
             tabs: [
               Tab(text: 'Pending'), // Tab cho đơn hàng chưa hoàn thành
               Tab(text: 'Completed'), // Tab cho đơn hàng đã hoàn thành
@@ -48,8 +49,12 @@ class _OrderListViewState extends State<OrderListView> {
         ),
         body: TabBarView(
           children: [
-            OrderList(type: OrderListType.pending), // Tab danh sách đơn hàng chưa hoàn thành
-            OrderList(type: OrderListType.completed), // Tab danh sách đơn hàng đã hoàn thành
+            OrderList(
+                type: OrderListType
+                    .pending), // Tab danh sách đơn hàng chưa hoàn thành
+            OrderList(
+                type: OrderListType
+                    .completed), // Tab danh sách đơn hàng đã hoàn thành
           ],
         ),
       ),
@@ -82,7 +87,7 @@ class _OrderListState extends State<OrderList> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () {
+      () {
         List<OrderModel> orders = [];
         if (widget.type == OrderListType.completed) {
           orders = orderVM.completedorderList;
@@ -91,23 +96,24 @@ class _OrderListState extends State<OrderList> {
         }
         return orders.isEmpty
             ? Center(
-          child: Text(
-            "No Any Order Place",
-            style: TextStyle(
-              color: TColor.primaryText,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        )
+                child: Text(
+                  "No Any Order Place",
+                  style: TextStyle(
+                    color: TColor.primaryText,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              )
             : ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          itemBuilder: (context, index) {
-            var mObj = orders[index];
-            return OrderRow(mObj: mObj, onTap: () {});
-          },
-          itemCount: orders.length,
-        );
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                itemBuilder: (context, index) {
+                  var mObj = orders[index];
+                  return OrderRow(mObj: mObj, onTap: () {});
+                },
+                itemCount: orders.length,
+              );
       },
     );
   }

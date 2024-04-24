@@ -4,11 +4,7 @@ import 'package:online_groceries_shop_app_flutter_admin/common/globs.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/service_call.dart';
 import 'package:online_groceries_shop_app_flutter_admin/model/offer_product_model.dart';
 
-
-import '../model/explore_category_model.dart';
-
 class SearchModel extends GetxController {
-
   final RxList<OfferProductModel> listArrSearch = <OfferProductModel>[].obs;
 
   final isLoading = false.obs;

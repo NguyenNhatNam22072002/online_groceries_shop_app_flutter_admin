@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/order_management/orders_management.dart';
 
 class AdminSummaryTable extends StatelessWidget {
@@ -14,24 +13,32 @@ class AdminSummaryTable extends StatelessWidget {
         DataColumn(
           label: Text(
             'Total Revenues',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), // Phóng to font chữ và in đậm
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16), // Phóng to font chữ và in đậm
           ),
         ),
         DataColumn(
           label: Text(
             'Total Orders',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), // Phóng to font chữ và in đậm
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16), // Phóng to font chữ và in đậm
           ),
         ),
       ],
       rows: [
         DataRow(
-          color: MaterialStateProperty.all<Color>(Colors.red), // Tô màu nền xanh cho hàng
+          color: MaterialStateProperty.all<Color>(
+              Colors.red), // Tô màu nền xanh cho hàng
           cells: [
             DataCell(
               Text(
                 '\$100',
-                style: TextStyle(color: Colors.white, fontSize: 16), // Đổi màu chữ thành trắng và phóng to font chữ
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize:
+                        16), // Đổi màu chữ thành trắng và phóng to font chữ
               ),
             ),
             DataCell(
@@ -42,7 +49,10 @@ class AdminSummaryTable extends StatelessWidget {
                     left: 0,
                     child: Text(
                       '11',
-                      style: TextStyle(color: Colors.white, fontSize: 16), // Đổi màu chữ thành trắng và phóng to font chữ
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize:
+                              16), // Đổi màu chữ thành trắng và phóng to font chữ
                     ),
                   ),
                   Positioned(
@@ -52,15 +62,18 @@ class AdminSummaryTable extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => OrderListView()),
+                          MaterialPageRoute(
+                              builder: (context) => OrderListView()),
                         );
-                    },
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white, // Màu nền của nút
-                          shape: BoxShape.circle, // Định dạng nút thành hình tròn
+                          shape:
+                              BoxShape.circle, // Định dạng nút thành hình tròn
                         ),
-                        padding: EdgeInsets.all(5), // Khoảng cách từ biên đến nội dung bên trong nút
+                        padding: EdgeInsets.all(
+                            5), // Khoảng cách từ biên đến nội dung bên trong nút
                         child: Icon(
                           Icons.arrow_forward_ios, // Icon của nút
                           color: Colors.red, // Màu của icon

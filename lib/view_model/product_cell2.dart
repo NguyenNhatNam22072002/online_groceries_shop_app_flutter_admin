@@ -7,10 +7,11 @@ class ProductCell2 extends StatelessWidget {
   final VoidCallback onPressed;
   final VoidCallback onCart;
 
-  ProductCell2({super.key,
-    required this.pObj,
-    required this.onPressed,
-    required this.onCart});
+  ProductCell2(
+      {super.key,
+      required this.pObj,
+      required this.onPressed,
+      required this.onCart});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,10 @@ class ProductCell2 extends StatelessWidget {
                 SizedBox(height: 8.0),
                 Text(
                   "${pObj.unitValue}${pObj.unitName}",
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.green),
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green),
                 ),
               ],
             ),

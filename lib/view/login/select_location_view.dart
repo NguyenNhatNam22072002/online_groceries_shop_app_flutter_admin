@@ -75,32 +75,30 @@ class _SelectLocationViewState extends State<SelectLocationView> {
                   SizedBox(
                     height: media.width * 0.1,
                   ),
-
-                  Dropdown(title: "Your Zone", placeholder: "Select your zone", valueList: const ["Zone 1", "Zone 2"],
-                  selectValue: selectZone, didChange: (sObj) {
-                     selectZone = sObj;
+                  Dropdown(
+                      title: "Your Zone",
+                      placeholder: "Select your zone",
+                      valueList: const ["Zone 1", "Zone 2"],
+                      selectValue: selectZone,
+                      didChange: (sObj) {
+                        selectZone = sObj;
                         setState(() {});
-                  } ),
-
+                      }),
                   SizedBox(
                     height: media.width * 0.07,
                   ),
-
                   Dropdown(
                       title: "Your Area",
                       placeholder: "Types of your area",
                       valueList: const ["Area 1", "Area 2"],
                       selectValue: selectArea,
                       didChange: (sObj) {
-
                         selectArea = sObj;
                         setState(() {});
-                  }),
-
+                      }),
                   SizedBox(
                     height: media.width * 0.1,
                   ),
-
                   RoundButton(
                     title: "Submit",
                     onPressed: () {

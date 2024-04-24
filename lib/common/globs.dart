@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -10,7 +8,6 @@ import '../main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Globs {
-
   static Future<void> saveAuthToken(String authToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('auth_token', authToken);
@@ -154,7 +151,8 @@ class SVKey {
   static const svAddReview = '${baseUrl}add_product_review';
   static const svUserInfo = '${baseUrl}user_info';
 
-  static const svMarkDefaultDeliveryAddress = '${baseUrl}mark_default_delivery_address';
+  static const svMarkDefaultDeliveryAddress =
+      '${baseUrl}mark_default_delivery_address';
 
   static const svPromoCodeList = '${baseUrl}promo_code_list';
   static const svMyOrders = '${baseUrl}my_order';
@@ -167,7 +165,8 @@ class SVKey {
   static const svChangePassword = '${baseUrl}change_password';
   static const svForgotPasswordRequest = '${baseUrl}forgot_password_request';
   static const svForgotPasswordVerify = '${baseUrl}forgot_password_verify';
-  static const svForgotPasswordSetPassword = '${baseUrl}forgot_password_set_password';
+  static const svForgotPasswordSetPassword =
+      '${baseUrl}forgot_password_set_password';
 
   static const svAddCoin = '${baseUrl}add_coin_review';
   static const svUseCoin = '${baseUrl}use_coin_for_order';
@@ -177,7 +176,8 @@ class SVKey {
 
   static const newOrdersList = '${adminUrl}new_orders_list';
   static const completedOrdersList = '${adminUrl}completed_orders_list';
-  static const cancelDeclineOrdersList = '${adminUrl}cancel_decline_orders_list';
+  static const cancelDeclineOrdersList =
+      '${adminUrl}cancel_decline_orders_list';
 
   static const svGetSalesData = '${adminUrl}sales_last_5_months';
   static const svGetNewOrders = '${adminUrl}new_orders_list';
@@ -185,7 +185,6 @@ class SVKey {
   static const svGetUserList = '${adminUrl}user_list';
   static const svGetNotificationReviewList = '${adminUrl}notification_list';
   static const svTop10Product = '${adminUrl}home_best_selling';
-
 }
 
 class KKey {

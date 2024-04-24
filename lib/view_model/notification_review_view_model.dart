@@ -7,7 +7,8 @@ import '../common/globs.dart';
 import '../common/service_call.dart';
 
 class NotificationReviewViewModel extends GetxController {
-  final RxList<NotificationReviewModel> notificationList = <NotificationReviewModel>[].obs;
+  final RxList<NotificationReviewModel> notificationList =
+      <NotificationReviewModel>[].obs;
   final isLoading = false.obs;
 
   @override

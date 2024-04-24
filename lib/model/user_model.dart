@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 class UserModel {
   final int userId;
   final String username;
@@ -54,10 +52,11 @@ class UserModel {
       deviceToken: json['device_token'] ?? '',
       resetCode: json['reset_code'] ?? '0000',
       status: json['status'] ?? 1,
-      createdDate: DateTime.parse(json['created_date'] ?? DateTime.now().toString()),
-      modifyDate: DateTime.parse(json['modify_date'] ?? DateTime.now().toString()),
+      createdDate:
+          DateTime.parse(json['created_date'] ?? DateTime.now().toString()),
+      modifyDate:
+          DateTime.parse(json['modify_date'] ?? DateTime.now().toString()),
       coin: json['coin'] ?? 0,
-
     );
   }
 
@@ -121,8 +120,10 @@ class UserModel {
       deviceToken: json['device_token'] ?? '',
       resetCode: json['reset_code'] ?? '0000',
       status: json['status'] ?? 1,
-      createdDate: DateTime.parse(json['created_date'] ?? DateTime.now().toString()),
-      modifyDate: DateTime.parse(json['modify_date'] ?? DateTime.now().toString()),
+      createdDate:
+          DateTime.parse(json['created_date'] ?? DateTime.now().toString()),
+      modifyDate:
+          DateTime.parse(json['modify_date'] ?? DateTime.now().toString()),
       coin: json['coin'] ?? 0,
     );
   }

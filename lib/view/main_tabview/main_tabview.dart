@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/home/home_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/notification/notification_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/order_management/orders_management.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/product/product_view.dart';
-import 'package:online_groceries_shop_app_flutter_admin/view/setting/setting_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/user/user_list_view.dart';
 
 import '../../common/color_extension.dart';
-
 
 class MainTabView extends StatefulWidget {
   const MainTabView({super.key});
@@ -33,7 +30,7 @@ class _MainTabViewState extends State<MainTabView>
     controller?.addListener(() {
       selectTab = controller?.index ?? 0;
 
-      if(selectTab == 3) {
+      if (selectTab == 3) {
         // favVM.serviceCalList();
       }
       setState(() {});
@@ -50,27 +47,23 @@ class _MainTabViewState extends State<MainTabView>
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(controller: controller, children: [
-         const HomeView(),
-         AddProductScreen(),
-         OrderListView(),
-         UserListView(),
-         NotificationListView(),
+        const HomeView(),
+        AddProductScreen(),
+        OrderListView(),
+        UserListView(),
+        NotificationListView(),
       ]),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
-          boxShadow:  [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 3,
-              offset: Offset(0, -2)
-            )
-          ]
-        ),
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black26, blurRadius: 3, offset: Offset(0, -2))
+            ]),
         child: BottomAppBar(
           color: Colors.transparent,
           elevation: 0,
@@ -93,35 +86,40 @@ class _MainTabViewState extends State<MainTabView>
               tabs: [
                 Tab(
                   text: "Home",
-                  icon: Icon(Icons.house,
+                  icon: Icon(
+                    Icons.house,
                     size: 25,
                     color: selectTab == 0 ? TColor.primary : TColor.primaryText,
                   ),
                 ),
                 Tab(
                   text: "Product",
-                  icon: Icon(Icons.category,
+                  icon: Icon(
+                    Icons.category,
                     size: 25,
                     color: selectTab == 1 ? TColor.primary : TColor.primaryText,
                   ),
                 ),
                 Tab(
                   text: "Order",
-                  icon: Icon(Icons.shopping_bag,
+                  icon: Icon(
+                    Icons.shopping_bag,
                     size: 25,
                     color: selectTab == 2 ? TColor.primary : TColor.primaryText,
                   ),
                 ),
                 Tab(
                   text: "User",
-                  icon: Icon(Icons.person,
+                  icon: Icon(
+                    Icons.person,
                     size: 25,
                     color: selectTab == 3 ? TColor.primary : TColor.primaryText,
                   ),
                 ),
                 Tab(
                   text: "Notifications",
-                  icon: Icon(Icons.notification_add,
+                  icon: Icon(
+                    Icons.notification_add,
                     size: 25,
                     color: selectTab == 4 ? TColor.primary : TColor.primaryText,
                   ),

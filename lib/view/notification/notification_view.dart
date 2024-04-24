@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:online_groceries_shop_app_flutter_admin/model/address_model.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/notification/notification_row.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view_model/notification_review_view_model.dart';
 
 import '../../common/color_extension.dart';
-import '../../view_model/notification_view_model.dart';
 
 class NotificationListView extends StatefulWidget {
   const NotificationListView({super.key});
@@ -64,7 +61,7 @@ class _NotificationListViewState extends State<NotificationListView> {
           ]),
       backgroundColor: Colors.white,
       body: Obx(
-            () => ListView.builder(
+        () => ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             itemBuilder: (context, index) {
               var nObj = notiVM.notificationList[index];

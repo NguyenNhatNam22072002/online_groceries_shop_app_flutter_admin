@@ -12,15 +12,13 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-
-  final splashVM = Get.put( SplashViewModel() );
+  final splashVM = Get.put(SplashViewModel());
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     splashVM.loadView();
-
   }
 
   @override
@@ -30,7 +28,7 @@ class _SplashViewState extends State<SplashView> {
       backgroundColor: TColor.primary,
       body: Center(
         child:
-        Image.asset("assets/img/splash_logo.png", width: media.width * 0.7),
+            Image.asset("assets/img/splash_logo.png", width: media.width * 0.7),
       ),
     );
   }

@@ -5,7 +5,8 @@ import 'package:online_groceries_shop_app_flutter_admin/model/notification_revie
 class NotificationRow extends StatelessWidget {
   final NotificationReviewModel nObj;
   final VoidCallback onTap;
-  const NotificationRow({Key? key, required this.nObj, required this.onTap}) : super(key: key);
+  const NotificationRow({Key? key, required this.nObj, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +37,10 @@ class NotificationRow extends StatelessWidget {
                               fontSize: 14,
                               fontWeight: FontWeight.w700),
                           maxLines: 2, // Giới hạn số dòng hiển thị
-                          overflow: TextOverflow.ellipsis, // Xử lý trường hợp vượt quá kích thước
+                          overflow: TextOverflow
+                              .ellipsis, // Xử lý trường hợp vượt quá kích thước
                         ),
                       ),
-
                       Text(
                         nObj.createdAt ?? "",
                         textAlign: TextAlign.left,
@@ -48,7 +49,6 @@ class NotificationRow extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(
                     height: 4,
                   ),
@@ -60,12 +60,9 @@ class NotificationRow extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.w500),
                   )
-
                 ],
               ),
             ),
-
-
           ],
         ),
       ),

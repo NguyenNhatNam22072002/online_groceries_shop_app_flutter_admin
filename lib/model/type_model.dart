@@ -14,11 +14,11 @@ class TypeModel {
     typeId = json['type_id'];
     typeName = json['type_name'];
     image = json['image'];
-    color = HexColor.fromHex(json['color'].toString())  ;
+    color = HexColor.fromHex(json['color'].toString());
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  {};
+    final Map<String, dynamic> data = {};
     data['type_id'] = typeId;
     data['type_name'] = typeName;
     data['image'] = image;

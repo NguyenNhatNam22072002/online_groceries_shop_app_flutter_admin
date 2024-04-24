@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.dart';
 import 'package:online_groceries_shop_app_flutter_admin/model/product_detail_model.dart';
 
-import 'package:provider/provider.dart';
-
 class OrderItemRow extends StatelessWidget {
   final ProductDetailModel pObj;
-  final bool allowReview; // Tham số boolean cho phép kiểm tra trạng thái đơn hàng
+  final bool
+      allowReview; // Tham số boolean cho phép kiểm tra trạng thái đơn hàng
 
-  const OrderItemRow({super.key, required this.pObj, required this.allowReview});
+  const OrderItemRow(
+      {super.key, required this.pObj, required this.allowReview});
 
   @override
   Widget build(BuildContext context) {
-
     // final reviewStateProvider = Provider.of<ReviewStateProvider>(context);
     // final reviewState = reviewStateProvider.getReviewState(pObj.prodId);
 
@@ -164,12 +163,9 @@ class OrderItemRow extends StatelessWidget {
             //     ),
             //   ),
             // ),
-
           ],
         ),
       ),
-
-
     );
   }
 }

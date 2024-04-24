@@ -4,7 +4,6 @@ import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.d
 import 'package:online_groceries_shop_app_flutter_admin/model/my_order_model.dart';
 import 'package:online_groceries_shop_app_flutter_admin/model/order_management_model.dart';
 
-
 class OrderRow extends StatelessWidget {
   final OrderModel mObj;
   final VoidCallback onTap;
@@ -37,12 +36,12 @@ class OrderRow extends StatelessWidget {
                   ),
                   Expanded(
                       child: Text(
-                        mObj.orderId?.toString() ?? "",
-                        style: TextStyle(
-                            color: TColor.primaryText,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
+                    mObj.orderId?.toString() ?? "",
+                    style: TextStyle(
+                        color: TColor.primaryText,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  )),
                   Text(
                     getOrderStatus(mObj),
                     style: TextStyle(
@@ -69,7 +68,7 @@ class OrderRow extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       ),
                       errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
+                          const Icon(Icons.error),
                       width: 60,
                       height: 60,
                       fit: BoxFit.contain,
@@ -101,7 +100,6 @@ class OrderRow extends StatelessWidget {
                               ),
                             ],
                           ),
-
                           Row(
                             children: [
                               Text(
@@ -113,15 +111,14 @@ class OrderRow extends StatelessWidget {
                               ),
                               Expanded(
                                   child: Text(
-                                    getDeliverType(mObj),
-                                    style: TextStyle(
-                                        color: TColor.primaryText,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  )),
+                                getDeliverType(mObj),
+                                style: TextStyle(
+                                    color: TColor.primaryText,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              )),
                             ],
                           ),
-
                           Row(
                             children: [
                               Text(
@@ -133,15 +130,14 @@ class OrderRow extends StatelessWidget {
                               ),
                               Expanded(
                                   child: Text(
-                                    getPaymentType(mObj),
-                                    style: TextStyle(
-                                        color: TColor.primaryText,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  )),
+                                getPaymentType(mObj),
+                                style: TextStyle(
+                                    color: TColor.primaryText,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              )),
                             ],
                           ),
-
                           Row(
                             children: [
                               Text(
@@ -153,12 +149,12 @@ class OrderRow extends StatelessWidget {
                               ),
                               Expanded(
                                   child: Text(
-                                    getPaymentStatus(mObj),
-                                    style: TextStyle(
-                                        color: getPaymentStatusColor(mObj),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700),
-                                  )),
+                                getPaymentStatus(mObj),
+                                style: TextStyle(
+                                    color: getPaymentStatusColor(mObj),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700),
+                              )),
                             ],
                           ),
                         ]),
@@ -169,7 +165,6 @@ class OrderRow extends StatelessWidget {
           )),
     );
   }
-
 }
 
 String getOrderStatus(OrderModel mObj) {

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/brand/brand_detail_view.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/category/category_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/home/home_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/notification/notification_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/order_management/orders_management.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/product/product_list_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/product/product_view.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/type/type_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/user/user_list_view.dart';
 
 import '../../common/color_extension.dart';
@@ -26,7 +30,7 @@ class _MainTabViewState extends State<MainTabView>
     super.initState();
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
-    controller = TabController(length: 5, vsync: this);
+    controller = TabController(length: 8, vsync: this);
     controller?.addListener(() {
       selectTab = controller?.index ?? 0;
 
@@ -48,10 +52,13 @@ class _MainTabViewState extends State<MainTabView>
     return Scaffold(
       body: TabBarView(controller: controller, children: [
         const HomeView(),
-        AddProductScreen(),
+        ProductListView(),
         OrderListView(),
         UserListView(),
         NotificationListView(),
+        CategoryDetailView(),
+        BrandDetailView(),
+        TypeView(),
       ]),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -124,6 +131,30 @@ class _MainTabViewState extends State<MainTabView>
                     color: selectTab == 4 ? TColor.primary : TColor.primaryText,
                   ),
                 ),
+                Tab(
+                    text: "Categories",
+                    icon: Icon(
+                      Icons.category,
+                      size: 25,
+                      color:
+                          selectTab == 5 ? TColor.primary : TColor.primaryText,
+                    )),
+                Tab(
+                    text: "Brands",
+                    icon: Icon(
+                      Icons.branding_watermark,
+                      size: 25,
+                      color:
+                          selectTab == 6 ? TColor.primary : TColor.primaryText,
+                    )),
+                Tab(
+                    text: "Types",
+                    icon: Icon(
+                      Icons.category,
+                      size: 25,
+                      color:
+                          selectTab == 7 ? TColor.primary : TColor.primaryText,
+                    ))
               ]),
         ),
       ),

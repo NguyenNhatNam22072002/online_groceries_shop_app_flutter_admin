@@ -96,8 +96,7 @@ class _UserListViewState extends State<UserListView> {
                     icon: Icon(Icons.delete,
                         color: Colors.red), // Icon thùng rác màu đỏ
                     onPressed: () {
-                      // Xử lý khi người dùng nhấn vào button thùng rác
-                      // Ví dụ: Gọi hàm xóa người dùng tại đây
+                      userMVM.deleteUser(user.userId!);
                     },
                   ),
                 ),

@@ -9,15 +9,13 @@ typedef ResSuccess = Future<void> Function(Map<String, dynamic>);
 typedef ResFailure = Future<void> Function(dynamic);
 
 class ServiceCall {
- 
-
   static void post(Map<String, dynamic> parameter, String path,
       {bool isToken = false, ResSuccess? withSuccess, ResFailure? failure}) {
     Future(() {
       try {
         var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
-        if(isToken) {
+        if (isToken) {
           var token = Get.find<SplashViewModel>().userPayload.value.authToken;
           headers["access_token"] = token ?? "";
         }

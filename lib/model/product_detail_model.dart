@@ -26,28 +26,29 @@ class ProductDetailModel {
   bool? isFav;
   int? salesQuantity;
 
-  ProductDetailModel(
-      {this.prodId,
-      this.catId,
-      this.brandId,
-      this.typeId,
-      this.name,
-      this.detail,
-      this.unitName,
-      this.unitValue,
-      this.nutritionWeight,
-      this.price,
-      this.createdDate,
-      this.modifyDate,
-      this.catName,
-      this.brandName,
-      this.typeName,
-      this.offerPrice,
-      this.startDate,
-      this.endDate,
-      this.isOfferActive,
-      this.isFav,
-      this.salesQuantity});
+  ProductDetailModel({
+    this.prodId,
+    this.catId,
+    this.brandId,
+    this.typeId,
+    this.name,
+    this.detail,
+    this.unitName,
+    this.unitValue,
+    this.nutritionWeight,
+    this.price,
+    this.createdDate,
+    this.modifyDate,
+    this.catName,
+    this.brandName,
+    this.typeName,
+    this.offerPrice,
+    this.startDate,
+    this.endDate,
+    this.isOfferActive,
+    this.isFav,
+    this.salesQuantity,
+  });
 
   ProductDetailModel.fromJson(Map<String, dynamic> json) {
     prodId = json['prod_id'];
@@ -76,7 +77,6 @@ class ProductDetailModel {
     isOfferActive = json['is_offer_active'];
     isFav = (json['is_fav'] as int? ?? 0) == 1;
     salesQuantity = json['sales_quantity'];
-
   }
 
   Map<String, dynamic> toJson() {

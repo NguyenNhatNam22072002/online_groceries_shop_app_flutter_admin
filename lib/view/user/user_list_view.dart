@@ -40,16 +40,6 @@ class _UserListViewState extends State<UserListView> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Image.asset(
-            "assets/img/back.png",
-            width: 20,
-            height: 20,
-          ),
-        ),
         centerTitle: true,
         title: Text(
           "New Users",

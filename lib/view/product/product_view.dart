@@ -34,7 +34,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   List categoryArr = [];
 
   Map? selectCateObj;
-
+  bool isSelected = false;
   int otherFlag = 0;
   final ProductManagementViewModel prodVM =
       Get.put(ProductManagementViewModel());
@@ -146,8 +146,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     PopupLayout(
                       child: ImagePickerView(
                         didSelect: (imagePath) {
-                          selectImage = File(imagePath);
-                          setState(() {});
+                          setState(() {
+                            selectImage = File(imagePath);
+                            isSelected = true;
+                          });
                         },
                       ),
                     ),
@@ -165,7 +167,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ]),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
-                    child: selectImage != null
+                    child: isSelected
                         ? Image.file(
                             selectImage!,
                             width: 120,

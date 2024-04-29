@@ -30,7 +30,7 @@ class _MainTabViewState extends State<MainTabView>
     super.initState();
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
-    controller = TabController(length: 8, vsync: this);
+    controller = TabController(length: 6, vsync: this);
     controller?.addListener(() {
       selectTab = controller?.index ?? 0;
 
@@ -52,14 +52,11 @@ class _MainTabViewState extends State<MainTabView>
     return Scaffold(
       body: TabBarView(controller: controller, children: [
         HomeView(),
-        AddProductScreen(),
-        //ProductListView(),
+        ProductListView(),
         OrderListView(),
         UserListView(),
         NotificationListView(),
         CategoryDetailView(),
-        BrandDetailView(),
-        TypeView(),
       ]),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -140,22 +137,6 @@ class _MainTabViewState extends State<MainTabView>
                       color:
                           selectTab == 5 ? TColor.primary : TColor.primaryText,
                     )),
-                Tab(
-                    text: "Brands",
-                    icon: Icon(
-                      Icons.branding_watermark,
-                      size: 25,
-                      color:
-                          selectTab == 6 ? TColor.primary : TColor.primaryText,
-                    )),
-                Tab(
-                    text: "Types",
-                    icon: Icon(
-                      Icons.category,
-                      size: 25,
-                      color:
-                          selectTab == 7 ? TColor.primary : TColor.primaryText,
-                    ))
               ]),
         ),
       ),

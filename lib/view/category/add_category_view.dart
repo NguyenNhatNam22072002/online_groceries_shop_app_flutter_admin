@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common_widget/image_picker_view.dart';
@@ -21,6 +22,9 @@ class AddCategoryView extends StatefulWidget {
 
 class _AddCategoryViewState extends State<AddCategoryView> {
   final CategoryDetailViewModel _viewModel = Get.put(CategoryDetailViewModel());
+
+  bool isSelected = false;
+  Color selectedColor = Colors.grey; // Default color
 
   @override
   void initState() {
@@ -72,10 +76,76 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                 controller: _viewModel.txtCatName.value,
               ),
               const SizedBox(height: 15),
-              LineTextField(
-                title: "Color",
-                placeholder: "Enter color",
-                controller: _viewModel.txtColor.value,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Color:',
+                    style: TextStyle(
+                      color: TColor.textTittle,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  InkWell(
+                    onTap: () async {
+                      // Show ColorPicker and update selectedColor
+                      final Color? pickedColor = await showDialog<Color>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Pick a color'),
+                            content: SingleChildScrollView(
+                              child: ColorPicker(
+                                pickerColor: selectedColor,
+                                onColorChanged: (Color color) {
+                                  setState(() {
+                                    selectedColor = color;
+                                  });
+                                },
+                                showLabel: true,
+                                pickerAreaHeightPercent: 0.8,
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(selectedColor);
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      if (pickedColor != null) {
+                        setState(() {
+                          selectedColor = pickedColor;
+                          _viewModel.txtColor.value.text =
+                              selectedColor.toString();
+                        });
+                      }
+                    },
+                    child: Container(
+                      width: 120,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: selectedColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        '',
+                        style: TextStyle(
+                          color: selectedColor.computeLuminance() > 0.5
+                              ? Colors.black
+                              : Colors.grey,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 25),
               InkWell(
@@ -86,37 +156,38 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                       child: ImagePickerView(
                         didSelect: (imagePath) {
                           _viewModel.selectImage = File(imagePath);
-                          setState(() {});
+                          setState(() {
+                            isSelected = true;
+                          });
                         },
                       ),
                     ),
                   );
                 },
                 child: Container(
-                    // Add your InkWell child widget here
-                    width: //media.width * 0.9,
-                        120,
-                    height: //media.height * 0.3,
-                        120,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: const [
-                          BoxShadow(color: Colors.black26, blurRadius: 4)
-                        ]),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: _viewModel.selectImage == null
-                          ? Icon(Icons.add_box_outlined,
-                              size: 50, color: Colors.grey[400])
-                          : Image.file(
-                              _viewModel.selectImage!,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                    )),
+                  width: 120,
+                  height: 120,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black26, blurRadius: 4)
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: !isSelected
+                        ? Icon(Icons.add_box_outlined,
+                            size: 50, color: Colors.grey[400])
+                        : Image.file(
+                            _viewModel.selectImage!,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                ),
               ),
               const SizedBox(height: 25),
               RoundButton(

@@ -5,8 +5,6 @@ import '../common/service_call.dart';
 import '../model/notification_model.dart';
 
 class NotificationViewModel extends GetxController {
- 
-
   final RxList<NotificationModel> listArr = <NotificationModel>[].obs;
 
   final isLoading = false.obs;
@@ -30,7 +28,6 @@ class NotificationViewModel extends GetxController {
       Globs.hideHUD();
 
       if (resObj[KKey.status] == "1") {
-       
         var listDataArr = (resObj[KKey.payload] as List? ?? []).map((oObj) {
           return NotificationModel.fromJson(oObj);
         }).toList();
@@ -43,12 +40,9 @@ class NotificationViewModel extends GetxController {
     });
   }
 
-  
-
   void serviceCallReadAll() {
     Globs.showHUD();
-    ServiceCall.post({},
-        SVKey.svNotificationReadAll, isToken: true,
+    ServiceCall.post({}, SVKey.svNotificationReadAll, isToken: true,
         withSuccess: (resObj) async {
       Globs.hideHUD();
       if (resObj[KKey.status] == "1") {
@@ -60,6 +54,4 @@ class NotificationViewModel extends GetxController {
       Get.snackbar(Globs.appName, err.toString());
     });
   }
-
- 
 }

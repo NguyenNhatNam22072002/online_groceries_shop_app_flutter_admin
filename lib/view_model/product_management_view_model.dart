@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/globs.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/service_call.dart';
@@ -10,6 +11,12 @@ import '../model/offer_product_model.dart';
 class ProductManagementViewModel extends GetxController {
   final RxList<OfferProductModel> bestSellingArr = <OfferProductModel>[].obs;
   final RxList<ProductDetailModel> productDetails = <ProductDetailModel>[].obs;
+  final txtProName = TextEditingController().obs;
+  final txtDetail = TextEditingController().obs;
+  final txtUnitName = TextEditingController().obs;
+  final txtUnitValue = TextEditingController().obs;
+  final txtNutritionWeight = TextEditingController().obs;
+  final txtPrice = TextEditingController().obs;
   final RxList<ImageModel> imageList = <ImageModel>[].obs;
   final isLoading = false.obs;
 

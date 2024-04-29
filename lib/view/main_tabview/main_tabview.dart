@@ -52,7 +52,8 @@ class _MainTabViewState extends State<MainTabView>
     return Scaffold(
       body: TabBarView(controller: controller, children: [
         HomeView(),
-        ProductListView(),
+        AddProductScreen(),
+        //ProductListView(),
         OrderListView(),
         UserListView(),
         NotificationListView(),

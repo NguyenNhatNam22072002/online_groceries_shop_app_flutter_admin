@@ -3,7 +3,7 @@ class SalesManagementModel {
   final double totalRevenue;
   final int totalOrder;
 
-  SalesManagementModel( {
+  SalesManagementModel({
     required this.monthYear,
     required this.totalRevenue,
     required this.totalOrder,
@@ -12,8 +12,12 @@ class SalesManagementModel {
   factory SalesManagementModel.fromJson(Map<String, dynamic> json) {
     return SalesManagementModel(
       monthYear: json['month_year'] ?? '',
-      totalRevenue: json['total_revenue'] != null ? double.parse(json['total_revenue'].toString()) : 0.0,
-      totalOrder: json['total_order'] != null ? int.parse(json['total_order'].toString()) : 0,
+      totalRevenue: json['total_revenue'] != null
+          ? double.parse(json['total_revenue'].toString())
+          : 0.0,
+      totalOrder: json['total_order'] != null
+          ? int.parse(json['total_order'].toString())
+          : 0,
     );
   }
 

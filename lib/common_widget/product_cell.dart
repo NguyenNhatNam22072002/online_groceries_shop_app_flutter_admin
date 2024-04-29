@@ -20,6 +20,7 @@ class ProductCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(pObj.image);
     return InkWell(
       onTap: onPressed,
       child: Container(

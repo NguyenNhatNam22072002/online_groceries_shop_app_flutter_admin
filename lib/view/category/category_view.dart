@@ -104,9 +104,14 @@ class _CategoryDetailViewState extends State<CategoryDetailView> {
                             color: Colors.blue,
                           ),
                           onPressed: () {
-                            Get.to(UpdateCategoryView(
-                              cObj: categoryDetail,
-                            ));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UpdateCategoryView(
+                                  cObj: categoryDetail,
+                                ),
+                              ),
+                            );
                           },
                         ),
                         IconButton(

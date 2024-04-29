@@ -3,11 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.dart';
 import 'package:online_groceries_shop_app_flutter_admin/model/my_order_model.dart';
 import 'package:online_groceries_shop_app_flutter_admin/model/order_management_model.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view_model/order_view_model.dart';
 
 class OrderRow extends StatelessWidget {
   final OrderModel mObj;
   final VoidCallback onTap;
-  const OrderRow({super.key, required this.mObj, required this.onTap});
+  final OrderViewModel orderViewModel;
+  final Function(OrderModel) updateOrderStatusCallback;
+
+  const OrderRow(
+      {super.key,
+      required this.mObj,
+      required this.onTap,
+      required this.orderViewModel,
+      required this.updateOrderStatusCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +51,65 @@ class OrderRow extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.w700),
                   )),
-                  Text(
-                    getOrderStatus(mObj),
-                    style: TextStyle(
-                        color: getOrderStatusColor(mObj),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  )
+                  getNextStatusText(mObj) != ""
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                          ),
+                          onPressed: () {
+                            //Xử lý khi nhấn vào nút
+                            switch (mObj.orderStatus) {
+                              case 1:
+                                // Nếu trạng thái đơn hàng là "Placed", thực hiện cập nhật trạng thái thành "Accepted"
+                                orderViewModel.updateOrderStatus(
+                                  orderId: mObj.orderId ?? "",
+                                  userId: mObj.userId ?? "",
+                                  orderStatus:
+                                      2, // Cập nhật trạng thái thành 2 (Accepted)
+                                );
+                                break;
+                              case 2:
+                                // Nếu trạng thái đơn hàng là "Accepted", thực hiện cập nhật trạng thái thành "Processing"
+                                orderViewModel.updateOrderStatus(
+                                  orderId: mObj.orderId ?? "",
+                                  userId: mObj.userId ?? "",
+                                  orderStatus:
+                                      3, // Cập nhật trạng thái thành 3 (Processing)
+                                );
+                                break;
+                              case 3:
+                                // Nếu trạng thái đơn hàng là "Processing", thực hiện cập nhật trạng thái thành "Delivering"
+                                orderViewModel.updateOrderStatus(
+                                  orderId: mObj.orderId ?? "",
+                                  userId: mObj.userId ?? "",
+                                  orderStatus:
+                                      4, // Cập nhật trạng thái thành 4 (Delivering)
+                                );
+                                break;
+                              case 4:
+                                // Nếu trạng thái đơn hàng là "Delivering", thực hiện cập nhật trạng thái thành "Delivered"
+                                orderViewModel.updateOrderStatus(
+                                  orderId: mObj.orderId ?? "",
+                                  userId: mObj.userId ?? "",
+                                  orderStatus:
+                                      5, // Cập nhật trạng thái thành 5 (Delivered)
+                                );
+                                break;
+                              default:
+                                // Trạng thái không hợp lệ
+                                break;
+                            }
+                            updateOrderStatusCallback(mObj);
+                          },
+                          child: Text(
+                            getNextStatusText(mObj),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                        )
+                      : SizedBox(width: 8),
                 ],
               ),
               Text(
@@ -168,18 +229,19 @@ class OrderRow extends StatelessWidget {
 }
 
 String getOrderStatus(OrderModel mObj) {
-  //1: new, 2: order_accept, 3: order_delivered, 4: cancel, 5: order declined
   switch (mObj.orderStatus) {
     case 1:
       return "Placed";
     case 2:
       return "Accepted";
     case 3:
-      return "Delivered";
+      return "Processing";
     case 4:
-      return "Cancel";
+      return "Delivering";
     case 5:
-      return "Declined";
+      return "Delivered";
+    case 6:
+      return "Canceled";
     default:
       return "";
   }
@@ -257,10 +319,31 @@ Color getOrderStatusColor(OrderModel mObj) {
     case 3:
       return Colors.green;
     case 4:
-      return Colors.red;
+      return Colors.green;
     case 5:
+      return Colors.green;
+    case 6:
       return Colors.red;
     default:
       return TColor.primary;
+  }
+}
+
+String getNextStatusText(OrderModel mObj) {
+  switch (mObj.orderStatus) {
+    case 1:
+      return "Accept";
+    case 2:
+      return "Process";
+    case 3:
+      return "Deliver";
+    case 4:
+      return "Delivered";
+    case 5:
+      return ""; // Đây là trạng thái cuối cùng, không có trạng thái tiếp theo
+    case 6:
+      return ""; // Đơn hàng đã bị hủy, không có trạng thái tiếp theo
+    default:
+      return "";
   }
 }

@@ -51,7 +51,7 @@ class _MainTabViewState extends State<MainTabView>
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(controller: controller, children: [
-        const HomeView(),
+        HomeView(),
         ProductListView(),
         OrderListView(),
         UserListView(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.dart';
 import 'package:online_groceries_shop_app_flutter_admin/model/order_management_model.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/order_management/order_detail_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/order_management/order_row.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view_model/order_view_model.dart';
 
@@ -14,7 +15,7 @@ class _OrderListViewState extends State<OrderListView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 6, // Số lượng tab là 6
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -39,26 +40,62 @@ class _OrderListViewState extends State<OrderListView> {
             ),
           ),
           bottom: TabBar(
-            labelColor:
-                Colors.black, // Đổi màu của văn bản trên các tab thành màu đen
+            isScrollable: true, // Cho phép cuộn các tab
+            labelColor: Colors.black, // Đổi màu của văn bản trên các tab thành màu đen
             tabs: [
-              Tab(text: 'Pending'), // Tab cho đơn hàng chưa hoàn thành
-              Tab(text: 'Completed'), // Tab cho đơn hàng đã hoàn thành
+              for (var i = 1; i <= 6; i++)
+                Tab(
+                  text: _getTabText(i), // Lấy văn bản của từng tab
+                ),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            OrderList(
-                type: OrderListType
-                    .pending), // Tab danh sách đơn hàng chưa hoàn thành
-            OrderList(
-                type: OrderListType
-                    .completed), // Tab danh sách đơn hàng đã hoàn thành
+            for (var i = 1; i <= 6; i++)
+              OrderList(type: getOrderListType(i)), // Tạo OrderList cho từng trạng thái
           ],
         ),
       ),
     );
+  }
+
+  String _getTabText(int index) {
+    switch (index) {
+      case 1:
+        return "Placed";
+      case 2:
+        return "Accepted";
+      case 3:
+        return "Processing";
+      case 4:
+        return "Delivering";
+      case 5:
+        return "Delivered";
+      case 6:
+        return "Canceled";
+      default:
+        return "";
+    }
+  }
+
+  OrderListType getOrderListType(int index) {
+    switch (index) {
+      case 1:
+        return OrderListType.placed;
+      case 2:
+        return OrderListType.accepted;
+      case 3:
+        return OrderListType.processing;
+      case 4:
+        return OrderListType.delivering;
+      case 5:
+        return OrderListType.delivered;
+      case 6:
+        return OrderListType.canceled;
+      default:
+        return OrderListType.placed;
+    }
   }
 }
 
@@ -74,13 +111,39 @@ class OrderList extends StatefulWidget {
 class _OrderListState extends State<OrderList> {
   final orderVM = Get.put(OrderViewModel());
 
+  // Hàm callback để cập nhật trạng thái
+  void _updateOrderStatus(OrderModel mObj) {
+    // Cập nhật trạng thái ở đây, ví dụ:
+    // orderVM.updateOrderStatus(
+    //   orderId: mObj.orderId ?? "",
+    //   userId: mObj.userId ?? "",
+    //   orderStatus: mObj.orderStatus + 1, // Ví dụ cập nhật lên trạng thái kế tiếp
+    // );
+
+  }
+
   @override
   void initState() {
     super.initState();
-    if (widget.type == OrderListType.completed) {
-      orderVM.getCompletedOrderData();
-    } else {
-      orderVM.getNewOrderData();
+    switch (widget.type) {
+      case OrderListType.placed:
+        orderVM.getNewOrderData();
+        break;
+      case OrderListType.accepted:
+        orderVM.getAcceptedOrderData();
+        break;
+      case OrderListType.processing:
+        orderVM.getProcessingOrderData();
+        break;
+      case OrderListType.delivering:
+        orderVM.getDeliveringOrderData();
+        break;
+      case OrderListType.delivered:
+        orderVM.getCompletedOrderData();
+        break;
+      case OrderListType.canceled:
+        orderVM.getCanceledOrderData();
+        break;
     }
   }
 
@@ -89,10 +152,25 @@ class _OrderListState extends State<OrderList> {
     return Obx(
       () {
         List<OrderModel> orders = [];
-        if (widget.type == OrderListType.completed) {
-          orders = orderVM.completedorderList;
-        } else {
-          orders = orderVM.neworderList;
+        switch (widget.type) {
+          case OrderListType.placed:
+            orders = orderVM.neworderList;
+            break;
+          case OrderListType.accepted:
+            orders = orderVM.acceptedOrderList;
+            break;
+          case OrderListType.processing:
+            orders = orderVM.processingOrderList;
+            break;
+          case OrderListType.delivering:
+            orders = orderVM.deliveringOrderList;
+            break;
+          case OrderListType.delivered:
+            orders = orderVM.completedorderList;
+            break;
+          case OrderListType.canceled:
+            orders = orderVM.canceledOrderList;
+            break;
         }
         return orders.isEmpty
             ? Center(
@@ -106,17 +184,23 @@ class _OrderListState extends State<OrderList> {
                 ),
               )
             : ListView.builder(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                itemBuilder: (context, index) {
-                  var mObj = orders[index];
-                  return OrderRow(mObj: mObj, onTap: () {});
-                },
-                itemCount: orders.length,
-              );
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          itemBuilder: (context, index) {
+            var mObj = orders[index];
+            return OrderRow(
+              mObj: mObj,
+              onTap: () {
+                Get.to( () => OrdersDetailView(mObj: mObj) );
+              },
+              orderViewModel: orderVM,
+              updateOrderStatusCallback: _updateOrderStatus,
+            );
+          },
+          itemCount: orders.length,
+        );
       },
     );
   }
 }
 
-enum OrderListType { completed, pending }
+enum OrderListType { placed, accepted, processing, delivering, delivered, canceled }

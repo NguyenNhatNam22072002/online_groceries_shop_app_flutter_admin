@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.dart';
 import 'package:online_groceries_shop_app_flutter_admin/model/sale_model.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/home/sales_summary_table.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/order_management/orders_management.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view_model/sales_management_model.dart';
 
 void main() {
@@ -43,6 +43,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF151734),
       body: Obx(() {
         if (salesVM.isLoading.value) {
           return Center(child: CircularProgressIndicator());
@@ -53,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -80,7 +81,7 @@ class _HomeViewState extends State<HomeView> {
                     Text(
                       "Hi, Admin",
                       style: TextStyle(
-                          color: TColor.darkGray,
+                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),
                     ),
@@ -90,35 +91,161 @@ class _HomeViewState extends State<HomeView> {
                   height: 15,
                 ),
                 // Bảng tổng doanh thu và tổng đơn hàng của admin
-                AdminSummaryTable(),
-                const SizedBox(height: 20),
-                // Tiêu đề cho bảng Sales Table
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    'Sales Table',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                // Bảng Sales Table
-                SalesTable(salesData: salesVM.salesList),
+                Obx(() {
+                  return DataTable(
+                    // Thêm border cho bảng
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.black), // Màu và độ dày của khung
+                    ),
+                    columns: [
+                      DataColumn(
+                        label: Text(
+                          'Total Revenues',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Color(
+                                0xFF6ED7FF), // Phóng to font chữ và in đậm
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Total Orders',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Color(
+                                0xFF6ED7FF), // Phóng to font chữ và in đậm
+                          ),
+                        ),
+                      )
+                    ],
+                    rows: [
+                      DataRow(
+                        color:
+                            MaterialStateProperty.all<Color>(Color(0xFF2F334F)),
+                        // Tô màu nền xanh cho hàng
+                        cells: [
+                          DataCell(
+                            Text(
+                              '\$${salesVM.totalPrice.value.toStringAsFixed(2)}',
+                              // Hiển thị tổng doanh thu
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            Stack(
+                              alignment: Alignment.center,
+                              // Đặt căn giữa cho Stack
+                              children: [
+                                Positioned(
+                                  left: 0,
+                                  child: Text(
+                                    '${salesVM.totalOrders.value}',
+                                    // Hiển thị tổng số đơn hàng
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  // Đặt vị trí của nút ở góc phải trên của cell
+                                  right: 0,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => OrderListView(),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white, // Màu nền của nút
+                                        shape: BoxShape
+                                            .circle, // Định dạng nút thành hình tròn
+                                      ),
+                                      padding: EdgeInsets.all(5),
+                                      // Khoảng cách từ biên đến nội dung bên trong nút
+                                      child: Icon(
+                                        Icons.arrow_forward_ios, // Icon của nút
+                                        color: Color(0xFF151734),
+                                        // Màu của icon
+                                        size: 10, // Kích thước của icon
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }),
                 const SizedBox(height: 20),
                 // Tiêu đề cho biểu đồ
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                     'Sales Chart',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 // Biểu đồ sử dụng CustomPaint
-                CustomPaint(
-                  size: Size(double.infinity, 300),
-                  painter: BarChartPainter(data: salesVM.salesList),
+                // Container bọc biểu đồ
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFF2F334F), // Màu nhạt
+                        Color(0xFF151734), // Màu đậm
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Color(0xFF8B93E0), width: 2),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  // Đặt khoảng cách giữa biểu đồ và viền container
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 16),
+                    child: CustomPaint(
+                      size: Size(double.infinity, 250),
+                      painter: BarChartPainter(data: salesVM.salesList),
+                    ),
+                  ),
                 ),
+                const SizedBox(height: 20),
+                // Tiêu đề cho bảng Sales Table
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    'Sales Table',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                // Bảng Sales Table
+                SalesTable(salesData: salesVM.salesList),
                 const SizedBox(height: 25),
               ],
             ),
@@ -136,19 +263,62 @@ class SalesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-      columns: [
-        DataColumn(label: Text('Month/Year')),
-        DataColumn(label: Text('Revenue')),
-      ],
-      rows: salesData.map((data) {
-        return DataRow(
-          cells: [
-            DataCell(Text(data.monthYear)),
-            DataCell(Text(data.totalRevenue.toString())),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF2F334F), // Màu nhạt
+            Color(0xFF151734), // Màu đậm
           ],
-        );
-      }).toList(),
+        ),
+        border: Border.all(color: Color(0xFF8B93E0), width: 2),
+      ),
+      child: DataTable(
+        dataRowHeight: 40,
+        // Đặt chiều cao của mỗi hàng
+        columns: [
+          DataColumn(
+            label: Text(
+              'Month/Year',
+              style: TextStyle(color: Color(0xFF6ED7FF)),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Revenue',
+              style: TextStyle(color: Color(0xFF6ED7FF)),
+            ),
+          ),
+        ],
+        rows: salesData.map((data) {
+          return DataRow(
+            cells: [
+              DataCell(
+                Text(
+                  data.monthYear,
+                  style: TextStyle(color: Color(0xFF6ED7FF)),
+                ),
+              ),
+              DataCell(
+                Text(
+                  data.totalRevenue.toString() + "\$",
+                  style: TextStyle(color: Color(0xFF6ED7FF)),
+                ),
+              ),
+            ],
+          );
+        }).toList(),
+        dividerThickness: 2,
+        dataRowColor:
+            MaterialStateColor.resolveWith((states) => Color(0xFF212542)),
+        dataTextStyle: TextStyle(fontSize: 14),
+        headingRowColor:
+            MaterialStateColor.resolveWith((states) => Color(0xFF151734)),
+        headingTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
@@ -164,136 +334,72 @@ class BarChartPainter extends CustomPainter {
       return; // Không vẽ gì nếu dữ liệu là null hoặc rỗng
     }
 
-    final double barWidth = size.width / (data.length * 2 + 1);
-    double maxRevenue = 0;
+    final double barWidth = size.width / (data.length * 3);
+    int maxOrder = 0;
     for (var i = 0; i < data.length; i++) {
-      final double revenue =
-          data[i].totalRevenue ?? 0; // Sử dụng ?? để xử lý trường hợp null
-      maxRevenue = max(maxRevenue, revenue);
+      final int order = data[i].totalOrder ?? 0;
+      maxOrder = max(maxOrder, order);
     }
-    final double barHeightUnit = size.height / maxRevenue;
+    final double barHeightUnit = size.height / (maxOrder * 1.2);
 
-    final Paint paint = Paint()..color = Colors.blue;
-
-    // Vẽ mũi tên ngang
-    final double arrowLength = 10;
-    final double arrowHeadWidth = 5;
-    final double arrowHeadHeight = 3;
-    final double arrowXStart = 0;
-    final double arrowXEnd = size.width;
-    final double arrowY = size.height;
-    canvas.drawLine(
-        Offset(arrowXStart, arrowY), Offset(arrowXEnd, arrowY), paint);
-    canvas.drawLine(
-      Offset(arrowXEnd - arrowHeadWidth, arrowY - arrowHeadHeight),
-      Offset(arrowXEnd, arrowY),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(arrowXEnd - arrowHeadWidth, arrowY + arrowHeadHeight),
-      Offset(arrowXEnd, arrowY),
-      paint,
-    );
-
-    // Vẽ mũi tên dọc
-    final double arrowHeadMargin = 5;
-    final double arrowYStart = 0;
-    final double arrowYEnd = size.height;
-    final double arrowX = 2; // Đặt mũi tên dọc ở bên trái
-    canvas.drawLine(
-        Offset(arrowX, arrowYStart), Offset(arrowX, arrowYEnd), paint);
-    canvas.drawLine(
-      Offset(arrowX + arrowHeadHeight, arrowHeadMargin),
-      Offset(arrowX, 0),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(arrowX - arrowHeadHeight, arrowHeadMargin),
-      Offset(arrowX, 0),
-      paint,
-    );
-
-    // Ghi chữ "Revenue" ở cao nhất của mũi tên dọc
-    TextSpan revenueSpan = TextSpan(
-      text: 'Revenue',
-      style: TextStyle(color: Colors.black, fontSize: 10),
-    );
-    TextPainter revenuePainter = TextPainter(
-      text: revenueSpan,
-      textDirection: TextDirection.ltr,
-    );
-    revenuePainter.layout();
-    final double revenueX =
-        arrowX + arrowHeadHeight + 5; // Đặt vị trí x cho văn bản "Revenue"
-    final double revenueY =
-        0; // Đặt vị trí y cho văn bản "Revenue" ở cao nhất của mũi tên dọc
-    revenuePainter.paint(canvas, Offset(revenueX, revenueY));
-
-    // Ghi chữ "Time" ở cuối mũi tên ngang
-    TextSpan timeSpan = TextSpan(
-      text: 'Time',
-      style: TextStyle(color: Colors.black, fontSize: 10),
-    );
-    TextPainter timePainter = TextPainter(
-      text: timeSpan,
-      textDirection: TextDirection.ltr,
-    );
-    timePainter.layout();
-    final double timeX = arrowXEnd -
-        timePainter
-            .width; // Đặt vị trí x cho văn bản "Time" ở cuối mũi tên ngang
-    final double timeY =
-        size.height + 5; // Đặt vị trí y cho văn bản "Time" dưới chân cột
-    timePainter.paint(canvas, Offset(timeX, timeY));
+    final Paint paint = Paint()..color = Color(0xFF6ED7FF);
 
     // Vẽ các cột dữ liệu và ghi giá trị "Revenue"
     for (int i = 0; i < data.length; i++) {
-      final double revenue =
-          data[i].totalRevenue ?? 0; // Sử dụng ?? để xử lý trường hợp null
+      final int order = data[i].totalOrder ?? 0;
 
-      final double x = (i * 2 + 1) * barWidth;
-      final double y = size.height - revenue * barHeightUnit;
+      final double x = (i * 3 + 1) * barWidth;
+      final double y = size.height - order * barHeightUnit;
 
-      canvas.drawRect(
-        Rect.fromLTWH(x, y, barWidth, revenue * barHeightUnit),
+      canvas.drawRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTWH(x, y, barWidth, order * barHeightUnit),
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+          bottomLeft: Radius.circular(8),
+          bottomRight: Radius.circular(8),
+        ),
         paint,
       );
 
-      // Ghi giá trị "Revenue" ở đầu mỗi cột
-      TextSpan revenueValueSpan = TextSpan(
-        text:
-            '${data[i].totalRevenue}', // Sử dụng giá trị revenue của SalesManagementModel
-        style: TextStyle(color: Colors.black, fontSize: 10),
+      // Ghi giá trị "total" ở đầu mỗi cột
+      TextSpan orderValueSpan = TextSpan(
+        text: '${data[i].totalOrder}', // Sử dụng ký tự tắt của tháng
+        style: TextStyle(
+            color: Color(0xFF6ED7FF),
+            fontSize: 10,
+            fontWeight: FontWeight.bold),
       );
-      TextPainter revenueValuePainter = TextPainter(
-        text: revenueValueSpan,
+      TextPainter orderValuePainter = TextPainter(
+        text: orderValueSpan,
         textDirection: TextDirection.ltr,
       );
-      revenueValuePainter.layout();
-      final double revenueValueX = x +
-          barWidth / 2 -
-          revenueValuePainter.width /
-              2; // Đặt vị trí x cho văn bản giá trị revenue
-      final double revenueValueY =
-          y - 15; // Đặt vị trí y cho văn bản giá trị revenue ở trên đỉnh cột
-      revenueValuePainter.paint(canvas, Offset(revenueValueX, revenueValueY));
+      orderValuePainter.layout();
+      final double orderValueX = x + barWidth / 2 - orderValuePainter.width / 2;
+      final double orderValueY = y - 15;
+      orderValuePainter.paint(canvas, Offset(orderValueX, orderValueY));
 
       // Ghi giá trị thời gian ở dưới chân mỗi cột
+      // Chuyển đổi số tháng thành ký tự tương ứng
+      String monthAbbreviation = getMonthAbbreviation(data[i].monthYear);
+
+      // Ghi giá trị "Revenue" ở đầu mỗi cột
       TextSpan timeSpan = TextSpan(
-        text: data[i]
-            .monthYear, // Giả sử thời gian là thuộc tính "monthYear" của đối tượng SalesManagementModel
-        style: TextStyle(color: Colors.black, fontSize: 10),
+        text: '$monthAbbreviation', // Sử dụng ký tự tắt của tháng
+        style: TextStyle(
+            color: Color(0xFF6ED7FF),
+            fontSize: 10,
+            fontWeight: FontWeight.bold),
       );
+
       TextPainter timePainter = TextPainter(
         text: timeSpan,
         textDirection: TextDirection.ltr,
       );
+
       timePainter.layout();
-      final double timeX = x +
-          barWidth / 2 -
-          timePainter.width / 2; // Đặt vị trí x cho văn bản thời gian
-      final double timeY =
-          size.height + 5; // Đặt vị trí y cho văn bản thời gian dưới chân cột
+      final double timeX = x + barWidth / 2 - timePainter.width / 2;
+      final double timeY = size.height + 5;
       timePainter.paint(canvas, Offset(timeX, timeY));
     }
   }
@@ -301,5 +407,26 @@ class BarChartPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+
+  // Hàm chuyển đổi số tháng thành ký tự tắt tương ứng
+  String getMonthAbbreviation(String monthYear) {
+    Map<String, String> monthAbbreviations = {
+      '01': 'Jan',
+      '02': 'Feb',
+      '03': 'Mar',
+      '04': 'Apr',
+      '05': 'May',
+      '06': 'Jun',
+      '07': 'Jul',
+      '08': 'Aug',
+      '09': 'Sep',
+      '10': 'Oct',
+      '11': 'Nov',
+      '12': 'Dec',
+    };
+
+    String month = monthYear.split('-')[0]; // Lấy số tháng từ chuỗi 'monthYear'
+    return monthAbbreviations[month] ?? '';
   }
 }

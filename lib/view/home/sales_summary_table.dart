@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:online_groceries_shop_app_flutter_admin/model/sale_model.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/order_management/orders_management.dart';
 
 class AdminSummaryTable extends StatelessWidget {
+  final RxInt totalOrders;
+  final RxDouble totalPrice;
+
+  AdminSummaryTable({required this.totalOrders, required this.totalPrice});
+
   @override
   Widget build(BuildContext context) {
     return DataTable(
@@ -14,31 +21,35 @@ class AdminSummaryTable extends StatelessWidget {
           label: Text(
             'Total Revenues',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16), // Phóng to font chữ và in đậm
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Color(0xFF6ED7FF), // Phóng to font chữ và in đậm
+            ),
           ),
         ),
         DataColumn(
           label: Text(
             'Total Orders',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16), // Phóng to font chữ và in đậm
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Color(0xFF6ED7FF), // Phóng to font chữ và in đậm
+            ),
           ),
-        ),
+        )
       ],
       rows: [
         DataRow(
-          color: MaterialStateProperty.all<Color>(
-              Colors.red), // Tô màu nền xanh cho hàng
+          color: MaterialStateProperty.all<Color>(Color(0xFF2F334F)),
+          // Tô màu nền xanh cho hàng
           cells: [
             DataCell(
               Text(
-                '\$100',
+                '\$${totalPrice.value}', // Hiển thị tổng doanh thu
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize:
-                        16), // Đổi màu chữ thành trắng và phóng to font chữ
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
               ),
             ),
             DataCell(
@@ -48,11 +59,11 @@ class AdminSummaryTable extends StatelessWidget {
                   Positioned(
                     left: 0,
                     child: Text(
-                      '11',
+                      '${totalOrders.value}', // Hiển thị tổng số đơn hàng
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize:
-                              16), // Đổi màu chữ thành trắng và phóng to font chữ
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -63,7 +74,8 @@ class AdminSummaryTable extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => OrderListView()),
+                            builder: (context) => OrderListView(),
+                          ),
                         );
                       },
                       child: Container(
@@ -72,11 +84,11 @@ class AdminSummaryTable extends StatelessWidget {
                           shape:
                               BoxShape.circle, // Định dạng nút thành hình tròn
                         ),
-                        padding: EdgeInsets.all(
-                            5), // Khoảng cách từ biên đến nội dung bên trong nút
+                        padding: EdgeInsets.all(5),
+                        // Khoảng cách từ biên đến nội dung bên trong nút
                         child: Icon(
                           Icons.arrow_forward_ios, // Icon của nút
-                          color: Colors.red, // Màu của icon
+                          color: Color(0xFF151734), // Màu của icon
                           size: 10, // Kích thước của icon
                         ),
                       ),

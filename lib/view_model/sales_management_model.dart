@@ -7,6 +7,8 @@ import '../common/service_call.dart';
 
 class SalesManagementViewModel extends GetxController {
   final RxList<SalesManagementModel> salesList = <SalesManagementModel>[].obs;
+  final totalOrders = 0.obs;
+  final totalPrice = 0.0.obs;
   final isLoading = false.obs;
 
   @override
@@ -26,10 +28,27 @@ class SalesManagementViewModel extends GetxController {
         Globs.hideHUD();
 
         if (resObj[KKey.status] == "1") {
-          var salesDataList = (resObj[KKey.payload] as List? ?? []).map((obj) {
+          var payload = resObj['payload'] as Map<String, dynamic>;
+
+          // Lấy tổng số đơn hàng
+          var totalOrderSummary =
+              payload['total_order_summary'] as Map<String, dynamic>;
+          totalOrders.value = totalOrderSummary['total_orders'] as int? ?? 0;
+
+          // Lấy tổng giá trị đơn hàng
+          var totalPriceSummary =
+              payload['total_price_summary'] as Map<String, dynamic>;
+          totalPrice.value =
+              totalPriceSummary['user_pay_price'] as double? ?? 0.0;
+
+          // Lấy danh sách các đơn hàng
+          var salesDataList =
+              (payload['sales_summary_last_7_months'] as List<dynamic>? ?? [])
+                  .map((obj) {
             return SalesManagementModel.fromJson(obj);
           }).toList();
           salesList.value = salesDataList;
+
           print("NAMANMAANM $salesList");
         } else {
           // Xử lý trường hợp không thành công

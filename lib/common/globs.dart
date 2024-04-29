@@ -112,7 +112,7 @@ class Globs {
 }
 
 class SVKey {
-  static const mainUrl = "http://172.16.31.36:3001";
+  static const mainUrl = "http://172.16.31.11:3001";
 
   // Hàm để lấy IPv4 Address từ thiết bị
   static const baseUrl = '$mainUrl/api/app/';
@@ -196,10 +196,19 @@ class SVKey {
   static const svUpdateCategory = '${adminUrl}product_category_update';
   static const svDeleteCategory = '${adminUrl}product_category_delete';
 
-  static const svGetSalesData = '${adminUrl}sales_last_5_months';
-
+  static const svGetSalesData = '${adminUrl}sales_summary';
   static const svGetNewOrders = '${adminUrl}new_orders_list';
   static const svGetCompletedOrders = '${adminUrl}completed_orders_list';
+  static const svGetAcceptedOrders = '${adminUrl}accepted_orders_list';
+  static const svGetProcessingOrders = '${adminUrl}processing_orders_list';
+  static const svGetDeliveringOrders = '${adminUrl}delivering_orders_list';
+  static const svGetCanceledOrders = '${adminUrl}canceled_orders_list';
+  static const svOrderStatusChange = '${adminUrl}order_status_change';
+  static const svAdminOrderDetail = '${adminUrl}order_detail';
+  static const svTotalOrderSummary = '${adminUrl}total_order_summary';
+  static const svTotalPriceSummary = '${adminUrl}total_price_summary';
+
+
   static const svGetUserList = '${adminUrl}user_list';
   static const svDeleteUser = '${adminUrl}user_delete';
   static const svGetNotificationReviewList = '${adminUrl}notification_list';

@@ -51,6 +51,7 @@ dependencies:
   provider: ^6.1.2
   flutter_charts: ^0.5.2
   image_picker: ^1.1.0
+  flutter_colorpicker: ^1.0.3
 
 dependency_overrides:
   intl: ^0.18.1

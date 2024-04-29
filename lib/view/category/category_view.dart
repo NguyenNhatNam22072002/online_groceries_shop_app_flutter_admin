@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/category/update_category_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view_model/category_detail_view_model.dart';
 import 'add_category_view.dart'; // Import the view where you want to navigate
 
@@ -102,7 +103,11 @@ class _CategoryDetailViewState extends State<CategoryDetailView> {
                             Icons.edit,
                             color: Colors.blue,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(UpdateCategoryView(
+                              cObj: categoryDetail,
+                            ));
+                          },
                         ),
                         IconButton(
                           icon: Icon(

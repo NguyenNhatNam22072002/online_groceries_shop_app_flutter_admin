@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,10 +10,8 @@ import '../model/category_detail_model.dart';
 
 class CategoryDetailViewModel extends GetxController {
   final txtCatName = TextEditingController().obs;
-  final txtImage = TextEditingController().obs;
-  final txtColor = TextEditingController()
-      .obs; // Assuming color is entered as a stringming status is initialized to 0
-
+  final txtColor = TextEditingController().obs;
+  File? selectImage;
   final RxList<CategoryDetailModel> categoryDetails =
       <CategoryDetailModel>[].obs;
   final isLoading = false.obs;
@@ -53,14 +53,14 @@ class CategoryDetailViewModel extends GetxController {
 
   void setDataModel(CategoryDetailModel cObj) {
     txtCatName.value.text = cObj.catName ?? "";
-    txtImage.value.text = cObj.image ?? "";
     txtColor.value.text = cObj.color?.toString() ?? "";
+    selectImage = cObj.image != null ? File(cObj.image!) : null;
   }
 
   void clearAll() {
     txtCatName.value.text = "";
-    txtImage.value.text = "";
     txtColor.value.text = "";
+    selectImage = null;
   }
 
   void createCategoryDetail(VoidCallback didDone) {
@@ -68,12 +68,6 @@ class CategoryDetailViewModel extends GetxController {
       Get.snackbar(Globs.appName, "Please enter category name");
       return;
     }
-
-    if (txtImage.value.text.isEmpty) {
-      Get.snackbar(Globs.appName, "Please enter image URL");
-      return;
-    }
-    // Assuming color is entered as a string, validate if it's a valid color
     if (txtColor.value.text.isEmpty) {
       Get.snackbar(Globs.appName, "Please enter color");
       return;
@@ -82,57 +76,67 @@ class CategoryDetailViewModel extends GetxController {
     }
 
     Globs.showHUD();
-    ServiceCall.post({
-      "cat_name": txtCatName.value.text,
-      "image": txtImage.value.text,
-      "color": txtColor.value.text,
-    }, SVKey.svCreateCategory, isToken: true, withSuccess: (resObj) async {
-      Globs.hideHUD();
-
-      if (resObj[KKey.status] == "1") {
-        Get.snackbar(Globs.appName, resObj[KKey.message].toString());
-        didDone();
-      } else {}
-    }, failure: (err) async {
-      Globs.hideHUD();
-      Get.snackbar(Globs.appName, err.toString());
-    });
+    ServiceCall.multipart(
+      {
+        "cat_name": txtCatName.value.text,
+        "color": txtColor.value.text,
+      },
+      SVKey.svCreateCategory,
+      isTokenApi: true,
+      imgObj: {"image": selectImage!},
+      withSuccess: (resObj) async {
+        Globs.hideHUD();
+        if (resObj[KKey.status] == "1") {
+          Get.snackbar(Globs.appName, resObj[KKey.message].toString());
+          didDone();
+          fetchCategoryDetails();
+        } else {
+          Get.snackbar(Globs.appName, "Failed to create category detail");
+        }
+      },
+      failure: (err) async {
+        Globs.hideHUD();
+        Get.snackbar(Globs.appName, err.toString());
+      },
+    );
   }
 
-  void updateCategoryDetail(int catId, VoidCallback didDone) {
+  void updateCategoryDetail(int catID, VoidCallback didDone) {
     if (txtCatName.value.text.isEmpty) {
       Get.snackbar(Globs.appName, "Please enter category name");
       return;
     }
-
-    if (txtImage.value.text.isEmpty) {
-      Get.snackbar(Globs.appName, "Please upload image");
-      return;
-    }
     if (txtColor.value.text.isEmpty) {
       Get.snackbar(Globs.appName, "Please enter color");
       return;
     } else {
       // Perform additional validation for color if needed
     }
-
     Globs.showHUD();
-    ServiceCall.post({
-      "cat_id": catId.toString(),
-      "cat_name": txtCatName.value.text,
-      "image": txtImage.value.text,
-      "color": txtColor.value.text,
-    }, SVKey.svUpdateCategory, isToken: true, withSuccess: (resObj) async {
-      Globs.hideHUD();
-
-      if (resObj[KKey.status] == "1") {
-        Get.snackbar(Globs.appName, resObj[KKey.message].toString());
-        didDone();
-      } else {}
-    }, failure: (err) async {
-      Globs.hideHUD();
-      Get.snackbar(Globs.appName, err.toString());
-    });
+    ServiceCall.multipart(
+      {
+        "cat_id": catID.toString(),
+        "cat_name": txtCatName.value.text,
+        "color": txtColor.value.text,
+      },
+      SVKey.svUpdateCategory,
+      isTokenApi: true,
+      imgObj: {"image": selectImage!},
+      withSuccess: (resObj) async {
+        Globs.hideHUD();
+        if (resObj[KKey.status] == "1") {
+          Get.snackbar(Globs.appName, resObj[KKey.message].toString());
+          didDone();
+          fetchCategoryDetails();
+        } else {
+          Get.snackbar(Globs.appName, "Failed to update category detail");
+        }
+      },
+      failure: (err) async {
+        Globs.hideHUD();
+        Get.snackbar(Globs.appName, err.toString());
+      },
+    );
   }
 
   void deleteCategoryDetail(int categoryId) async {

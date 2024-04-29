@@ -79,7 +79,7 @@ class CategoryDetailViewModel extends GetxController {
     ServiceCall.multipart(
       {
         "cat_name": txtCatName.value.text,
-        "color": txtColor.value.text,
+        "color": txtColor.value.text.replaceAll('0xff', ''),
       },
       SVKey.svCreateCategory,
       isTokenApi: true,
@@ -117,7 +117,11 @@ class CategoryDetailViewModel extends GetxController {
       {
         "cat_id": catID.toString(),
         "cat_name": txtCatName.value.text,
-        "color": txtColor.value.text,
+        "color": txtColor.value.text
+            .replaceAll('0xff', '')
+            .replaceAll('Color(', '')
+            .replaceAll(')', '')
+            .replaceAll('#', ''),
       },
       SVKey.svUpdateCategory,
       isTokenApi: true,

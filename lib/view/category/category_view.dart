@@ -81,13 +81,13 @@ class _CategoryDetailViewState extends State<CategoryDetailView> {
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16),
                     leading: Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
                         image: DecorationImage(
                           image: NetworkImage(categoryDetail.image ?? ''),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),

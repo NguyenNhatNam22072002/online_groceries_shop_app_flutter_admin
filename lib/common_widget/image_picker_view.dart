@@ -18,7 +18,7 @@ class _ImagePickerViewState extends State<ImagePickerView> {
     var media = MediaQuery.sizeOf(context);
     return Container(
       width: media.width * 0.9,
-      height: media.width * 0.7,
+      height: media.width * 0.75,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           color: Colors.white,

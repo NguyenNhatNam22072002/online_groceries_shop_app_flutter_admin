@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.dart';
@@ -20,6 +22,11 @@ class _UserListViewState extends State<UserListView> {
   void initState() {
     super.initState();
     userMVM.fetchSalesData();
+  }
+
+  int generateRandomIndex(int listLength) {
+    final Random random = Random();
+    return random.nextInt(listLength);
   }
 
   Future<void> _handleRefresh() async {
@@ -90,7 +97,10 @@ class _UserListViewState extends State<UserListView> {
               leading: CircleAvatar(
                 radius: 40,
                 child: Image.asset(
-                  "assets/img/u1.png",
+                  [
+                    'assets/img/u1.png',
+                    'assets/img/u2.png',
+                  ][generateRandomIndex(2)],
                   width: 80,
                   height: 80,
                 ),
@@ -137,7 +147,10 @@ class _UserListViewState extends State<UserListView> {
         leading: CircleAvatar(
           radius: 40,
           child: Image.asset(
-            "assets/img/u1.png",
+            [
+              'assets/img/u1.png',
+              'assets/img/u2.png',
+            ][generateRandomIndex(2)],
             width: 80,
             height: 80,
           ),

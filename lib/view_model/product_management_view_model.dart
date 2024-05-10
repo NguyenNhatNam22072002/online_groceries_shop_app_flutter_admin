@@ -85,4 +85,27 @@ class ProductManagementViewModel extends GetxController {
       },
     );
   }
+
+  void deleteProduct(int productId) {
+    Globs.showHUD();
+    ServiceCall.post(
+      {"prod_id": productId.toString()},
+      SVKey.svDeleteProduct,
+      isToken: true,
+      withSuccess: (resObj) async {
+        Globs.hideHUD();
+        if (resObj[KKey.status] == "1") {
+          productDetails.removeWhere((e) => e.prodId == productId);
+        } else {
+          Get.snackbar(Globs.appName,
+              resObj[KKey.message] ?? "Failed to delete product");
+        }
+      },
+      failure: (err) async {
+        Globs.hideHUD();
+        // Handle failure
+        Get.snackbar(Globs.appName, err.toString());
+      },
+    );
+  }
 }

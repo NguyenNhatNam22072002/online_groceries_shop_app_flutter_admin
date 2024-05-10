@@ -3,7 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:online_groceries_shop_app_flutter_admin/common/color_extension.dart';
 import 'package:online_groceries_shop_app_flutter_admin/model/product_detail_model.dart';
-import 'package:online_groceries_shop_app_flutter_admin/view/product/product_view.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/product/product_add_view.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/product/product_edit_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/product/review/review_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view_model/product_management_view_model.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -169,7 +170,7 @@ class _ProductListViewState extends State<ProductListView> {
                               ),
                               onPressed: () {
                                 // Navigate to the update product view and pass the product object
-                                // Get.to(UpdateProductView(pObj: productDetail));
+                                Get.to(UpdateProductScreen(pObj: productDetail));
                               },
                             ),
                             IconButton(
@@ -179,7 +180,7 @@ class _ProductListViewState extends State<ProductListView> {
                               ),
                               onPressed: () {
                                 // Implement delete function if needed
-                                //productManagementVM.deleteProduct(productDetail.prodId!);
+                                productManagementVM.deleteProduct(productDetail.prodId!);
                               },
                             ),
                           ],

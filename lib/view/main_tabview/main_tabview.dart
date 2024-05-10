@@ -6,7 +6,7 @@ import 'package:online_groceries_shop_app_flutter_admin/view/home/home_view.dart
 import 'package:online_groceries_shop_app_flutter_admin/view/notification/notification_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/order_management/orders_management.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/product/product_list_view.dart';
-import 'package:online_groceries_shop_app_flutter_admin/view/product/product_view.dart';
+import 'package:online_groceries_shop_app_flutter_admin/view/product/product_add_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/type/type_view.dart';
 import 'package:online_groceries_shop_app_flutter_admin/view/user/user_list_view.dart';
 
